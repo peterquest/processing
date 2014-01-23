@@ -9,7 +9,7 @@ class Mountain {
     y1pos = height;
     x2pos = 800+int(random(150,250));
     y2pos = 300+int(random(25,60)); //tweak these to make them look normal 
-    x3pos = 1200+int(random(150,250));
+    x3pos = 1200+int(random(150,250);
     y3pos = height;
   }
 
@@ -36,18 +36,12 @@ void setup() {
 /*  List<Mountain> mountainList = new LinkedList<Mountain>();
   for (int i=0;i<4;i++) {
     mountainList.add(new Mountain());
-  }
-*/
+  }*/
+
 }
 
 void draw() {
   background(255);
-/*
-  for (int i=0; i<4; i++) {
-    mountainList.get(i).moveMountain();
-    mountainList.get(i).drawMountain();
-  }
-*/
   mountain.moveMountain();
   mountain.drawMountain();
 }
