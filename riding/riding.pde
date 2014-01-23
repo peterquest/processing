@@ -8,8 +8,8 @@ class Mountain {
     x1pos = 800;
     y1pos = height;
     x2pos = 800+int(random(150,250));
-    y2pos = 300; //add some variance here later
-    x3pos = 1200; // and here
+    y2pos = 300+int(random(25,60)); //tweak these to make them look normal 
+    x3pos = 1200+int(random(150,250);
     y3pos = height;
   }
 
