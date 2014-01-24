@@ -1,7 +1,7 @@
-import java.util.Iterator;
+/*import java.util.Iterator;
 import java.util.LinkedList;
 import java.util.Queue;
-
+*/
 
 
 class Mountain {
@@ -29,21 +29,18 @@ class Mountain {
     x2pos--;
     x3pos--;
     if (x3pos<0) {
-      mountains.poll();
       println("wat! ");
     }
   }
 }
 
-Queue<Mountain> mountains = new LinkedList<Mountain>();
-Iterator iter = mountains.iterator();
-
-
+ArrayList mountains = new ArrayList();
+//Iterator iter = mountains.iterator();
+int frameCounter=0;
 
 void setup() {
   size(800,500);
   noStroke();
-  int frameCounter=0;
   frameRate(300); //super fast just for testing.
 //  mountain = new Mountain();
 /*  List<Mountain> mountainList = new LinkedList<Mountain>();
@@ -61,14 +58,14 @@ void draw() {
     mountainList.get(i).drawMountain();
   }
 */
-  if (frameCounter%5 == 0) {
+ // if (frameCounter%5 == 0) {
     mountains.add(new Mountain());
-  }
+ // }
 
-  while (iter.hasNext()) {
-    Mountain currentMountain = mountains.peek();
-    currentMountain.moveMountain();
-    currentMountain.drawMountain();
+  for (int i=0; i<mountains.size(); i++) {
+    Mountain m = (Mountain) mountains.get(i);
+    m.moveMountain();
+    m.drawMountain();
   }
 
 //  mountain.moveMountain();
