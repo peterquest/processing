@@ -28,9 +28,6 @@ class Mountain {
     x1pos--;
     x2pos--;
     x3pos--;
-    if (x3pos<0) {
-      println("wat! ");
-    }
   }
 }
 
@@ -58,16 +55,23 @@ void draw() {
     mountainList.get(i).drawMountain();
   }
 */
- // if (frameCounter%5 == 0) {
+ if (frameCounter%100 == 0) {
     mountains.add(new Mountain());
- // }
+ }
 
   for (int i=0; i<mountains.size(); i++) {
     Mountain m = (Mountain) mountains.get(i);
+    if (m.x3pos<0) {   //make this a method
+      mountains.remove(i);
+      println("wutttt");
+    }
+    else{
     m.moveMountain();
     m.drawMountain();
+    }
   }
 
+frameCounter++;
 //  mountain.moveMountain();
  // mountain.drawMountain();
 }
