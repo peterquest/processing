@@ -1,7 +1,17 @@
-/*import java.util.Iterator;
-import java.util.LinkedList;
-import java.util.Queue;
-*/
+/* NOTE FOR FUTURE CHANGES!:
+ *
+ * I was thinking about how to draw the mountains incorrectly.
+ * mountains can be basically described as equilateral or isoceles.
+ * so all you need to do is randomly place points throughout a horizontal
+ * band and then evenly balance the base coordinates.
+ *
+ * Then you can get them to overlap by having a variance of about +/-100
+ * pixels as you add them to the mountain arraylist.
+ *
+ * but now i am going to bed.
+ *
+ */
+
 
 
 class Mountain {
