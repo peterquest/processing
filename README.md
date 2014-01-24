@@ -7,7 +7,7 @@ processing projects 2014
 
 
 1. Work on riding.pde more
-..* make mountains overlap by starting the drawing farther offscreen and
+  * make mountains overlap by starting the drawing farther offscreen and
 alternating the order.
-..* add skier? or some bg? maybe not.
+  * add skier? or some bg? maybe not.
 
