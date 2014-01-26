@@ -16,16 +16,18 @@
 
 class Mountain {
   color mountainColor;
-  int x1pos, y1pos, x2pos, y2pos, x3pos, y3pos;
+  int x1pos, y1pos, x2pos, y2pos, x3pos, y3pos, baseWidthOverTwo;
   int speed = 1; //probably wont need this unless i add parallax
 
   Mountain() {
-    mountainColor = int(random(255));
-    x1pos = 800;
+
+    mountainColor = int(random(0,225));
+    x2pos = 950+int(random(0,400)); //generate the peak first!
+    y2pos = 225+int(random(0,75));
+    baseWidthOverTwo = random(150,250); //guarantees isoceles as
+    x1pos = x2pos-baseWidthOverTwo; // x1 and x3 are evenly balanced
     y1pos = height;
-    x2pos = 800+int(random(150,250));
-    y2pos = 300+int(random(25,60)); //tweak these to make them look normal
-    x3pos = 1200;
+    x3pos = x2pos+baseWidthOverTwo;
     y3pos = height;
   }
 
@@ -42,19 +44,12 @@ class Mountain {
 }
 
 ArrayList mountains = new ArrayList();
-//Iterator iter = mountains.iterator();
 int frameCounter=0;
 
 void setup() {
   size(800,500);
   noStroke();
-  frameRate(300); //super fast just for testing.
-//  mountain = new Mountain();
-/*  List<Mountain> mountainList = new LinkedList<Mountain>();
-  for (int i=0;i<4;i++) {
-    mountainList.add(new Mountain());
-  }
-*/
+  frameRate(60); // adjust as u want
 }
 
 void draw() {
@@ -65,7 +60,7 @@ void draw() {
     mountainList.get(i).drawMountain();
   }
 */
- if (frameCounter%100 == 0) {
+ if (frameCounter%42 == 0) {
     mountains.add(new Mountain());
  }
 
@@ -73,7 +68,6 @@ void draw() {
     Mountain m = (Mountain) mountains.get(i);
     if (m.x3pos<0) {   //make this a method
       mountains.remove(i);
-      println("wutttt");
     }
     else{
     m.moveMountain();
