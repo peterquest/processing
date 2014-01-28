@@ -2,8 +2,9 @@
  *
  * Made those changes but it still doesnt exactly match the video
  * that I based this off of. This is because when people paint
- * mountains they dont allow the peaks to be very close. the 
- * mountains are also oddly pointy.
+ * mountains they dont allow the peaks to be very close. i could add
+ * a check in the constructor or check what the constructor returns.
+ * the mountains are also oddly pointy.
  *
  * I can probably address these things, but I'm not sure if i care
  * that much.
@@ -13,6 +14,8 @@
  *  2. rotate a rectangle with curved edges. tricky!
  */
 
+ArrayList mountains = new ArrayList();
+PImage skier = loadImage("skierSmall.png");
 
 class Mountain {
   color mountainColor;
@@ -43,19 +46,15 @@ class Mountain {
     triangle(x1pos,y1pos,x2pos,y2pos,x3pos,y3pos);
   }
 
+    // at some point i will change moveMountain() to use the variable 'speed'
+    // as a modifier to create parallax instead of just moving 1px
+    // per frame.
   void moveMountain() {
     x1pos--;
     x2pos--;
     x3pos--;
   }
 }
-
-
-ArrayList mountains = new ArrayList();
-int frameCounter=0;
-PImage skier = loadImage("skierSmall.png");
-float skierHeight;
-float skierDelta = TWO_PI/60;
 
 void setup() {
   size(800,500);
@@ -75,7 +74,7 @@ void draw() {
 //variable called 'phase' or something
 image(skier, 50, 50+(10*sin(frameCount%120*TWO_PI/120)));
 
- if (frameCounter%42 == 0) { //the magic number
+ if (frameCount%42 == 0) { //the magic number
     mountains.add(new Mountain());
  }
 
@@ -89,8 +88,4 @@ image(skier, 50, 50+(10*sin(frameCount%120*TWO_PI/120)));
     m.drawMountain();
     }
   }
-
-frameCounter++;
-//  mountain.moveMountain();
- // mountain.drawMountain();
 }
