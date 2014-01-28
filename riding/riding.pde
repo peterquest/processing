@@ -14,22 +14,28 @@
  */
 
 
-
 class Mountain {
   color mountainColor;
   int x1pos, y1pos, x2pos, y2pos, x3pos, y3pos, baseWidthOverTwo;
   int speed = 1; //probably wont need this unless i add parallax
 
-  Mountain() {
-
+  Mountain(x2, y2) { //give the constructor a point for the peak
+                           // keep in mind we fudge this point for randomness
+                           // there is no need for precision really.
     mountainColor = int(random(0,225));
-    x2pos = 950+int(random(0,400)); //generate the peak first!
-    y2pos = 225+int(random(0,75));
+    x2pos = x2+int(random(0,400)); //generate the peak first!
+    y2pos = y2+int(random(0,75));
     baseWidthOverTwo = random(150,250); //guarantees isoceles as
     x1pos = x2pos-baseWidthOverTwo; // x1 and x3 are evenly balanced
-    y1pos = height;
+    y1pos = height;                // from either side of the peak
     x3pos = x2pos+baseWidthOverTwo;
     y3pos = height;
+  }
+ 
+ // default constructor. always starts mountains off the right edge
+ // of the screen
+  Mountain () {
+    this(1050,225);
   }
 
   void drawMountain() {
@@ -44,25 +50,32 @@ class Mountain {
   }
 }
 
+
 ArrayList mountains = new ArrayList();
 int frameCounter=0;
+PImage skier = loadImage("skierSmall.png");
+float skierHeight;
+float skierDelta = TWO_PI/60;
 
 void setup() {
   size(800,500);
   noStroke();
   frameRate(60); // adjust as u want
+  // load the mountain array with 35 mountains. 
+  for (int i=-5; i<30;i++) {
+  mountains.add(new Mountain(i*30,225));
+
+  }
 }
 
 void draw() {
-  background(255);
-  
-/*
-  for (int i=0; i<4; i++) {
-    mountainList.get(i).moveMountain();
-    mountainList.get(i).drawMountain();
-  }
-*/
- if (frameCounter%42 == 0) {
+ background(225);
+
+//draw the skier and have him float. probably 120 should be a 
+//variable called 'phase' or something
+image(skier, 50, 50+(10*sin(frameCount%120*TWO_PI/120)));
+
+ if (frameCounter%42 == 0) { //the magic number
     mountains.add(new Mountain());
  }
 
