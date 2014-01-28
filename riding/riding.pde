@@ -1,15 +1,16 @@
 /* NOTE FOR FUTURE CHANGES!:
  *
- * I was thinking about how to draw the mountains incorrectly.
- * mountains can be basically described as equilateral or isoceles.
- * so all you need to do is randomly place points throughout a horizontal
- * band and then evenly balance the base coordinates.
+ * Made those changes but it still doesnt exactly match the video
+ * that I based this off of. This is because when people paint
+ * mountains they dont allow the peaks to be very close. the 
+ * mountains are also oddly pointy.
  *
- * Then you can get them to overlap by having a variance of about +/-100
- * pixels as you add them to the mountain arraylist.
+ * I can probably address these things, but I'm not sure if i care
+ * that much.
  *
- * but now i am going to bed.
- *
+ * options for rounding mountains: 
+ *  1. create new shape
+ *  2. rotate a rectangle with curved edges. tricky!
  */
 
 
@@ -54,6 +55,7 @@ void setup() {
 
 void draw() {
   background(255);
+  
 /*
   for (int i=0; i<4; i++) {
     mountainList.get(i).moveMountain();
