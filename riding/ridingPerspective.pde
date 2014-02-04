@@ -15,6 +15,7 @@
  */
 
 ArrayList mountains = new ArrayList();
+ArrayList fastMountains = new ArrayList();
 PImage skier = loadImage("skierSmall.png");
 
 class Mountain {
@@ -24,7 +25,7 @@ class Mountain {
   int minWidthOverTwo = 150; // min*2 to max*2
   int speed = 1; //probably wont need this unless i add parallax
 
-  Mountain(x2, y2) { //give the constructor a point for the peak
+  Mountain(x2, y2, sp) { //give the constructor a point for the peak
                      // keep in mind we fudge this point for randomness
                      // there is no need for precision really.
     mountainColor = int(random(0,225));
@@ -35,12 +36,13 @@ class Mountain {
     y1pos = height;                // from either side of the peak
     x3pos = x2pos+baseWidthOverTwo;
     y3pos = height;
+    speed = sp;
   }
  
  // default constructor. always starts mountains off the right edge
  // of the screen
   Mountain () {
-    this(1050,225);
+    this(1050,225, 1);
   }
 
   void drawMountain() {
@@ -52,19 +54,20 @@ class Mountain {
     // as a modifier to create parallax instead of just moving 1px
     // per frame.
   void moveMountain() {
-    x1pos--;
-    x2pos--;
-    x3pos--;
+    x1pos-=speed;
+    x2pos-=speed;
+    x3pos-=speed;
   }
 }
 
 void setup() {
   size(800,500);
   noStroke();
-  frameRate(60); // adjust as u want
-  // load the mountain array with 35 mountains. 
-  for (int i=-5; i<30;i++) {
-  mountains.add(new Mountain(i*30,225));
+  frameRate(40); // adjust as u want
+  // load the mountain array with 30 mountains. 
+  for (int i=-5; i<25;i++) {
+  mountains.add(new Mountain(i*30,225,1));
+  fastMountains.add(new Mountain(i*30,225,3));
 
   }
 }
@@ -76,14 +79,31 @@ void draw() {
 //variable called 'phase' or something
 image(skier, 50, 50+(10*sin(frameCount%120*TWO_PI/120)));
 
- if (frameCount%42 == 0) { //the magic number
+
+ if (frameCount%28 == 0) { // 3x as many fast mts as slow
+
+    fastMountains.add(new Mountain(1050,225,3));
+
+ if (frameCount%84 == 0) {
+    
     mountains.add(new Mountain());
+ }
  }
 
   for (int i=0; i<mountains.size(); i++) {
     Mountain m = (Mountain) mountains.get(i);
     if (m.x3pos<0) {   //make this a method
       mountains.remove(i);
+    }
+    else{
+    m.moveMountain();
+    m.drawMountain();
+    }
+  }
+  for (int i=0; i<fastMountains.size(); i++) {
+    Mountain m = (Mountain) fastMountains.get(i);
+    if (m.x3pos<0) {   //make this a method
+      fastMountains.remove(i);
     }
     else{
     m.moveMountain();
