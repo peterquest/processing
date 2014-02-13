@@ -1,0 +1,35 @@
+## HTML SOURCE. processing src below
+
+<!DOCTYPE html> 
+<script type="text/javascript" src="../js/processing-1.4.1.js"></script>
+  <script type="text/javascript"> 
+   var x = 100; 
+   function lighten() { 
+     x += 10; 
+	 } 
+	 
+   function darken() {
+	x -= 10;
+   }
+	
+  </script> 
+  <body onload="myInit()"> 
+		<canvas data-processing-sources="webtest.pde"></canvas> <br/>
+			<a href="#" onclick="lighten();return false;">Lighten up!</a> <br/>
+        <a href="#" onclick="darken();return false;">Darken down!</a> 
+        </body> 
+			</html> 
+
+## PROCESSING SOURCE
+
+void setup() { 
+ size(200, 200); 
+ frameRate(30); 
+  } 
+
+	//notice that we don't actually instantiate x anywhere.
+	// it gets done in the html source. fun!
+void draw() { 
+ background(color(x, x, x)); 
+} 
+
