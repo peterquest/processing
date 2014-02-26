@@ -1,27 +1,43 @@
-int circleRadius = 30;
+int circleRadius = 25; 
 int xSpeed = 9; //making these speeds different makes for
 int ySpeed = 5; // a wackier path. high speeds are fun!
 int x = circleRadius+100;
 int y = circleRadius;
-int p1Score, p2Score;
-int p1PaddlePos = 270;
-int p2PaddlePos = 350;
-int paddleHeight = circleRadius*3;
+int p1Score = 0;
+int p2Score = 0;
+int p1PaddlePos = 250;
+int p2PaddlePos = 250;
+int paddleHeight = circleRadius*4;
 int paddleWidth = 20;
-int bounceMarker; // THIS IS WEIRD AND HACKY.
+int bounceMarker; // THIS FEELS WEIRD AND HACKY.
+int result; //this is just getting ugly now.
+String lastWinner = "";
 boolean p1up, p1down, p2up, p2down;
+boolean started;
 
 void setup() {
    size(800,600);
+   startScreen();
 }
 
 void draw() {
-   drawBackground();
-   drawPaddles();
-   updateBall();
-   updateScore();
-       
+  startGame();
+  if (!started) return;
 
+  drawBackground();
+  drawPaddles();
+  updateBall();
+  checkScore();
+}
+
+
+void checkScore() {
+  textSize(60);
+  fill(255);
+  text(p1Score, width/4, 50);
+  text(p2Score, 3*width/4, 50);
+  if ((p1Score > 6) && (p1Score > p2Score+1)) gameOver(1);
+  if ((p2Score > 6) && (p2Score > p1Score+1)) gameOver(2);
 }
 
 
@@ -62,6 +78,10 @@ void detectPaddles(int x, int y) {
 void drawBackground() {
    fill(120,0,10,50);
    rect(0,0,width,height);
+   stroke(255);
+   strokeWeight(5);
+   line(width/2,0,width/2,height);
+   noStroke();
 }
 
 void keyPressed () {
@@ -86,6 +106,22 @@ void keyReleased () {
 void updateBall() {
    x+=xSpeed;
    y+=ySpeed;
+   result = scored(x);
+   if (result != 0) {
+     if (result == 1) {
+       p1Score++;
+       x = width-circleRadius*4;
+       y = 100;
+       xSpeed = -xSpeed;
+     }
+     if (result == 2) {
+       p2Score++;
+       x = circleRadius*4;
+       y = 100;
+       xSpeed = -xSpeed;
+     }
+   }
+   
    fill(255);
    ellipse(x,y,circleRadius*2,circleRadius*2);
    detectPaddles(x,y);
@@ -98,24 +134,46 @@ void drawPaddles() {
   rect(width-paddleWidth, p2PaddlePos, paddleWidth-3, paddleHeight);
             
 }
-/*
+
 void gameOver(int winner){
-   // wait for mouseclick
-   //text("player " + winner + " wins!", 300,300, 100,100);
-   // on mouseclick: restart();
-   //   }
-   */
-void updatePaddles() {
-   if (p1up) p1PaddlePos -= 5;
-   if (p1down) p1PaddlePos += 5;
-   if (p2up) p2PaddlePos -= 5;
-   if (p2down) p2PaddlePos += 5;
-        }
-
-void updateScore() {
-//if ball.x > width p1++
-//          < 0     p2++
-// if p2>7 && p2>p1+1, gameOver(1);
-// 
-
+ started = false;
+ p1Score = 0;
+ p2Score = 0;
+ lastWinner = "player " + winner + " ";
+ startScreen();
 }
+
+int scored(int x) {
+  if (x > width+circleRadius*4) return 1;
+  if (x < 0-circleRadius*4) return 2;
+  else return 0;
+}
+
+void startGame() {
+  if (mousePressed) started = true;
+}
+
+void startScreen() {
+  background(100);
+  fill(150,0,50,255);
+  textSize(48);
+  text("PONGER.", 50,50);
+  textSize(32);
+  text("Q and A control p1, P and L control p2.", 150,100);
+  text("Click to start!", 200, 150); 
+  if (lastWinner != "") {
+    textSize(60);
+    fill(0,50,200,255);
+    text(lastWinner + "won the last round. Play again!", 150,200, 300,300);
+ }
+}
+
+void updatePaddles() {
+  if (p1PaddlePos > 0){ if (p1up) p1PaddlePos -= 5;}
+  if (p1PaddlePos+paddleHeight < height){if (p1down) p1PaddlePos += 5;}
+  if (p2PaddlePos > 0){if (p2up) p2PaddlePos -= 5;}
+  if (p2PaddlePos+paddleHeight< height){if (p2down) p2PaddlePos += 5;}
+}
+
+
+
