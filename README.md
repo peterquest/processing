@@ -3,8 +3,6 @@ processing
 
 processing projects 2014
 
-http://yopete.com/processing
-
 ###To Do
 
 
